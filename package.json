@@ -1,0 +1,13 @@
+{
+  "name": "mba8610-long-term-project",
+  "private": true,
+  "description": "MBA 8610 Long-Term Project: a Node.js system that runs one business process and records its data.",
+  "scripts": {
+    "start": "node src/index.js",
+    "save-codex": "node scripts/save-codex-sessions.js",
+    "save-chats": "node scripts/save-chatgpt-export.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
