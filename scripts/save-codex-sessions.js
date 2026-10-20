@@ -5,7 +5,7 @@ Copy your Codex sessions for THIS project into ai-logs/codex/<you>/ so teammates
 Codex saves every session on your own computer (in ~/.codex/sessions on a Mac,
 %USERPROFILE%\.codex\sessions on Windows), never in the repository. This script finds the
 sessions you ran in this repository's folder, copies each one into the repository, and
-writes a readable transcript next to it. Then you commit and push in GitHub Desktop.
+writes a readable transcript next to it. Then you ask Codex to commit and push them.
 
 Run it from the repository folder:
     node scripts/save-codex-sessions.js
@@ -143,7 +143,7 @@ function main() {
   }
   console.log(`${a['dry-run'] ? '[dry run] ' : ''}Saved to ${path.relative(root, outDir)}: ${copied} new session(s), ${updated} updated.`);
   if (secret) console.log(`${secret} session(s) skipped because they appear to contain a secret.`);
-  if (copied || updated) console.log('Now commit and push in GitHub Desktop (write a summary, Commit, Push origin).');
+  if (copied || updated) console.log('Now ask Codex to commit and push these files on your current branch.');
   else console.log("Nothing new. If you expected sessions, make sure Codex was working in this repository's folder.");
 }
 

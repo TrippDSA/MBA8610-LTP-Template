@@ -6,14 +6,14 @@ MBA 8610, Clemson University, Fall 2026. Long-Term Project. Instructor: Dr. John
 [Two or three sentences from your D0 brief: the process, who runs it, and what data it produces.]
 
 ## Team
-| Name | GitHub username | Point of contact for |
-|---|---|---|
-| | | |
+| Name | GitHub username | Clemson email | Best way to reach | Point of contact for |
+|---|---|---|---|---|
+| | | | | |
 
 ## How to run the system
 1. Install Node.js (LTS) if you have not already: https://nodejs.org
-2. Get the repository on your computer: GitHub Desktop, **File > Clone repository**.
-3. Open a terminal in the repository: GitHub Desktop, **Repository > Open in Terminal** (Mac) or **Open in Command Prompt** (Windows).
+2. Get the repository on your computer, in a folder outside OneDrive, Dropbox, and iCloud Drive: `gh repo clone OWNER/mba8610-group-N` (or, in a Codex project on an empty folder, ask Codex to put the repository in that folder).
+3. Open a terminal in the repository folder (or ask Codex to run the next two steps).
 4. Install the packages the system uses: `npm install`
 5. Start the system: `npm start`
 
@@ -31,6 +31,7 @@ MBA 8610, Clemson University, Fall 2026. Long-Term Project. Instructor: Dr. John
 | `scripts/` | The two scripts that save AI history into `ai-logs/`. |
 
 ## Team rules
-- Every change reaches `main` through a pull request that a teammate reviews and merges. No direct commits to `main`.
+- Every change reaches `main` through a pull request that a teammate reviews and merges. No direct commits to `main`. (The one exception: each teammate's own row in the Team table during setup.)
+- Codex runs Git for the team. Read each command before you approve it.
 - After every Codex session: `node scripts/save-codex-sessions.js`, then commit and push.
 - Never commit a password, API key, or the ChatGPT export .zip.

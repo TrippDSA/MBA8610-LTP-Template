@@ -5,10 +5,10 @@ Copy your team's ChatGPT conversations from a ChatGPT data export into ai-logs/c
 ChatGPT keeps your chats on OpenAI's servers, not in this repository. When you export your data
 (ChatGPT: Settings > Data controls > Export data), OpenAI emails you a .zip that holds ALL of
 your chats. This script reads it, keeps only the chats whose title starts with your team tag
-(for example "[Team 7]"), and saves each one as JSON plus a readable transcript. Personal or
+(for example "[Group 7]"), and saves each one as JSON plus a readable transcript. Personal or
 unrelated chats are never copied.
 
-    node scripts/save-chatgpt-export.js ~/Downloads/the-export.zip --tag "[Team 7]"
+    node scripts/save-chatgpt-export.js ~/Downloads/the-export.zip --tag "[Group 7]"
 
 You can also point it at the unzipped folder. The first time, add --me your-github-username
 (remembered in a file Git ignores). Do not commit the export .zip itself.
@@ -130,7 +130,7 @@ function slug(s) { return (s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/
 
 function main() {
   const a = args(process.argv.slice(2));
-  if (!a._[0] || typeof a.tag !== 'string') fail('Usage: node scripts/save-chatgpt-export.js <export.zip or folder> --tag "[Team 7]"');
+  if (!a._[0] || typeof a.tag !== 'string') fail('Usage: node scripts/save-chatgpt-export.js <export.zip or folder> --tag "[Group 7]"');
   const root = a.repo ? path.resolve(a.repo) : path.resolve(__dirname, '..');
   const me = whoAmI(root, a.me);
   const convs = loadConversations(a._[0]);
@@ -153,7 +153,7 @@ function main() {
   }
   console.log(`Saved ${saved} of ${mine.length} tagged chat(s) to ${path.relative(root, outDir)} (out of ${convs.length} chats in the export).`);
   if (skipped) console.log(`${skipped} skipped because they appear to contain a secret.`);
-  console.log('Now commit and push in GitHub Desktop. Do not commit the export .zip.');
+  console.log('Now ask Codex to commit and push these files. Do not commit the export .zip.');
 }
 
 main();
