@@ -26,7 +26,8 @@ MBA 8610, Clemson University, Fall 2026. Long-Term Project. Instructor: Dr. John
 | `data/` | Sample input data and the records the system writes when it runs. |
 | `analysis/` | The Phase 2 analytical module (Node.js, or Python, R, or a notebook). |
 | `docs/` | `working-agreement.md` and `decisions.md`, the four-decisions journal. |
-| `deliverables/` | The PDF of each deliverable as submitted (D1 to D4). |
+| `instructions/` | The course's project instructions and rubrics, copied from Canvas. |
+| `deliverables/` | Each deliverable as submitted (D0 to D4), with a Markdown copy Codex can read. |
 | `ai-logs/` | Each member's saved Codex sessions and project ChatGPT chats. |
 | `scripts/` | The two scripts that save AI history into `ai-logs/`. |
 

@@ -3,7 +3,7 @@
 Codex reads this file automatically when it works in this folder. Keep it in the repository root.
 
 ## The project
-This is an MBA 8610 (Clemson) team project. The team is building a working Node.js system that runs one real business process and records data at every step (Phase 1, Automate), then an analytical module that turns that data into findings (Phase 2, Informate). Read `README.md` for the process this team chose and `docs/decisions.md` for decisions already made.
+This is an MBA 8610 (Clemson) team project. The team is building a working Node.js system that runs one real business process and records data at every step (Phase 1, Automate), then an analytical module that turns that data into findings (Phase 2, Informate). Read `README.md` for the process this team chose and `docs/decisions.md` for decisions already made. Before starting any work, read `instructions/` (the course's project instructions and rubrics) and the Markdown copies in `deliverables/` (what the team has turned in), so the work fits what the project asks for.
 
 ## Who decides
 The team members are managers directing the build, not software engineers. They make four calls: what to build, what "good enough" means, who is accountable, and when to stop. When a request leaves one of those open, ask the user instead of choosing for them, and say what the options are in plain language.
