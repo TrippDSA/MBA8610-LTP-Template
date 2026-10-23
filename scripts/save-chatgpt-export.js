@@ -19,7 +19,9 @@ const path = require('path');
 const zlib = require('zlib');
 const os = require('os');
 
-const SECRET_PATTERNS = [/sk-[A-Za-z0-9_-]{20,}/, /ghp_[A-Za-z0-9]{30,}/, /github_pat_[A-Za-z0-9_]{30,}/,
+// A key starts its own token: 'sk-' after a letter, digit, or hyphen is a word (task-, risk-, a URL slug
+// like residents-ask-odnr-...), not an OpenAI key (2026-10-23).
+const SECRET_PATTERNS = [/(?<![A-Za-z0-9_-])sk-[A-Za-z0-9_-]{20,}/, /ghp_[A-Za-z0-9]{30,}/, /github_pat_[A-Za-z0-9_]{30,}/,
   /AKIA[0-9A-Z]{16}/, /-----BEGIN [A-Z ]*PRIVATE KEY-----/];
 const CONV_FILE = /(^|\/)conversations[^/]*\.json$/;
 
