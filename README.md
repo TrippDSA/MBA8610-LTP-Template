@@ -34,6 +34,6 @@ MBA 8610, Clemson University, Fall 2026. Long-Term Project. Instructor: Dr. John
 ## Team rules
 - Every change reaches `main` through a pull request that a teammate reviews and merges. No direct commits to `main`. (The one exception: each teammate's own row in the Team table during setup.)
 - Codex runs Git for the team. Read each command before you approve it.
-- After every Codex session: `node scripts/save-codex-sessions.js`, then commit and push.
-- Save each project ChatGPT chat: ask Codex to "save my ChatGPT chat" and give it the chat's share link.
+- Codex saves its own sessions into `ai-logs/` every time it commits. You don't need to run anything.
+- A chat in regular ChatGPT (outside Codex) is not saved automatically: ask Codex to "save my ChatGPT chat" and give it the chat's share link.
 - Never commit a password or API key.

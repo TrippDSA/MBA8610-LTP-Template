@@ -8,7 +8,7 @@ ai-logs/
   chatgpt/<github-username>/   Project ChatGPT chats: one .md transcript each, starting with the chat's share link
 ```
 
-- Save Codex sessions with `node scripts/save-codex-sessions.js` after every working session.
-- Save each project ChatGPT chat by asking Codex to "save my ChatGPT chat." Codex follows the steps in `AGENTS.md` and runs `scripts/save-chatgpt-chat.js` (Clemson's ChatGPT Edu accounts cannot export chat history).
+- Codex saves its own sessions here every time it commits (see `AGENTS.md`). To save by hand: `node scripts/save-codex-sessions.js`.
+- A chat in regular ChatGPT, outside Codex, is saved by asking Codex to "save my ChatGPT chat." Codex follows the steps in `AGENTS.md` and runs `scripts/save-chatgpt-chat.js` (Clemson's ChatGPT Edu accounts cannot export chat history).
 - Commit and push after saving. Logs are due before every deliverable.
 - Never commit a password or API key. The scripts refuse anything that looks like one.

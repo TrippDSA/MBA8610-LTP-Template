@@ -5,7 +5,8 @@ Copy your Codex sessions for THIS project into ai-logs/codex/<you>/ so teammates
 Codex saves every session on your own computer (in ~/.codex/sessions on a Mac,
 %USERPROFILE%\.codex\sessions on Windows), never in the repository. This script finds the
 sessions you ran in this repository's folder, copies each one into the repository, and
-writes a readable transcript next to it. Then you ask Codex to commit and push them.
+writes a readable transcript next to it. Codex runs it itself before every commit (see AGENTS.md),
+so the team's sessions reach the repository without anyone remembering to save them.
 
 Run it from the repository folder:
     node scripts/save-codex-sessions.js
@@ -47,6 +48,11 @@ function whoAmI(root, given) {
   const marker = path.join(root, '.ai-logs-me');
   if (typeof given === 'string' && given.trim()) { fs.writeFileSync(marker, given.trim() + '\n'); return given.trim(); }
   if (fs.existsSync(marker)) return fs.readFileSync(marker, 'utf8').trim();
+  try { // signed in to the GitHub CLI: use that account (2026-10-23, so Codex can save without asking)
+    const login = require('child_process').execFileSync('gh', ['api', 'user', '--jq', '.login'],
+      { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+    if (login) { fs.writeFileSync(marker, login + '\n'); return login; }
+  } catch (e) { /* gh not available or not signed in */ }
   console.error('First run: tell me your GitHub username, for example:  node scripts/save-codex-sessions.js --me jsmith');
   process.exit(1);
 }
@@ -143,7 +149,7 @@ function main() {
   }
   console.log(`${a['dry-run'] ? '[dry run] ' : ''}Saved to ${path.relative(root, outDir)}: ${copied} new session(s), ${updated} updated.`);
   if (secret) console.log(`${secret} session(s) skipped because they appear to contain a secret.`);
-  if (copied || updated) console.log('Now ask Codex to commit and push these files on your current branch.');
+  if (copied || updated) console.log('Commit these files with the work they belong to.');
   else console.log("Nothing new. If you expected sessions, make sure Codex was working in this repository's folder.");
 }
 
