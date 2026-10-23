@@ -29,10 +29,11 @@ MBA 8610, Clemson University, Fall 2026. Long-Term Project. Instructor: Dr. John
 | `instructions/` | The course's project instructions and rubrics, copied from Canvas. |
 | `deliverables/` | Each deliverable as submitted (D0 to D4), with a Markdown copy Codex can read. |
 | `ai-logs/` | Each member's saved Codex sessions and project ChatGPT chats. |
-| `scripts/` | The two scripts that save AI history into `ai-logs/`. |
+| `scripts/` | The scripts that save AI history into `ai-logs/`. |
 
 ## Team rules
 - Every change reaches `main` through a pull request that a teammate reviews and merges. No direct commits to `main`. (The one exception: each teammate's own row in the Team table during setup.)
 - Codex runs Git for the team. Read each command before you approve it.
 - After every Codex session: `node scripts/save-codex-sessions.js`, then commit and push.
-- Never commit a password, API key, or the ChatGPT export .zip.
+- Save each project ChatGPT chat: ask Codex to "save my ChatGPT chat" and give it the chat's share link.
+- Never commit a password or API key.

@@ -25,5 +25,14 @@ The team does not use GitHub Desktop. You run Git and the GitHub CLI (`gh`) for 
 - Never force-push. Before any command that discards work (`git reset --hard`, `git checkout -- .`, `git clean`), explain what would be lost and ask first.
 - If a push is rejected because GitHub has newer changes, pull them, resolve any conflict with the user, and push again.
 
+## Saving ChatGPT chats
+Clemson's ChatGPT Edu accounts cannot export chat history, so project chats are saved one at a time. When the user asks to save a ChatGPT chat:
+1. If they have not given you the chat's share link and a short topic, ask for both. To get the link: in ChatGPT, open the chat, click **Share**, then **Copy link**. If they added to the chat after sharing it, they click **Share** again and update the link.
+2. Ask them to open the share link in their browser, select the whole conversation (Cmd+A on a Mac, Ctrl+A on Windows), and copy it. Then run `node scripts/save-chatgpt-chat.js --link "<link>" --topic "<topic>"`. The script reads the conversation from the clipboard and saves it to `ai-logs/chatgpt/<their-github-username>/`.
+3. If the script cannot read the clipboard, ask the user to paste the conversation into this chat, save it to a temporary file outside the repository, and run the script again with `--file <that file>`. Delete the temporary file afterward.
+4. Open the saved file and confirm it holds the conversation, not something else that was on the clipboard. Never edit, shorten, or summarize a saved transcript.
+5. If the script stops because the conversation appears to contain a password or key, tell the user and do not save it.
+6. Commit the file on a branch and open a pull request, following the Git rules above.
+
 ## Before the session ends
-Remind the user to save this session for the team: run `node scripts/save-codex-sessions.js`, then commit and push on the current branch. If the session settled one of the four decisions, suggest an entry for `docs/decisions.md`; the team writes it.
+Remind the user to save this session for the team: run `node scripts/save-codex-sessions.js`, then commit and push on the current branch. If they used ChatGPT for this work, offer to save those chats too (see above). If the session settled one of the four decisions, suggest an entry for `docs/decisions.md`; the team writes it.

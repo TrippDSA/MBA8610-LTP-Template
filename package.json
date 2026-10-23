@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node src/index.js",
     "save-codex": "node scripts/save-codex-sessions.js",
+    "save-chat": "node scripts/save-chatgpt-chat.js",
     "save-chats": "node scripts/save-chatgpt-export.js"
   },
   "engines": {
