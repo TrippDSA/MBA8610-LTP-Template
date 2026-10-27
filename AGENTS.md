@@ -19,6 +19,9 @@ The team members are managers directing the build, not software engineers. They 
 The team does not use GitHub Desktop. You run Git and the GitHub CLI (`gh`) for them, and they are learning the commands by reading what you run.
 - Say in plain language what each Git command does before or as you run it.
 - Work on a branch named for the work. Do not commit to `main` unless the user explicitly asks for that. If the user asks for a commit while on `main`, suggest starting a branch first.
+- Start each new piece of work from the latest `main`: switch to `main`, pull, then create the branch. Do not reuse an old branch for new work. A branch holds only what was on `main` when it started, so an old branch hides everything teammates have merged since.
+- If the user wants to keep working on an existing branch, pull `main` first, then merge `main` into the branch. Resolve any conflict with the user.
+- After a pull request merges, switch back to `main`, pull, and offer to delete the merged branch.
 - Before committing, show `git status` and point out any file the user may not expect, especially data about real people, a `.zip`, or anything that looks like a password or key.
 - Open pull requests with `gh pr create`, with a title and a short description of what changed and why.
 - Never merge a pull request. A teammate other than the author reviews and merges it on github.com.
