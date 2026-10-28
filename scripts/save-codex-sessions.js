@@ -12,6 +12,9 @@ Run it from the repository folder:
     node scripts/save-codex-sessions.js
 The first time, tell it your GitHub username (it remembers it in a file Git ignores):
     node scripts/save-codex-sessions.js --me your-github-username
+A session started in a folder that contains this repository is not saved, and the script says so.
+To save one such session by its ID:
+    node scripts/save-codex-sessions.js --session-id session-id
 
 It never reads or copies your Codex login (auth.json) or anything outside the sessions folder.
 */
@@ -120,6 +123,11 @@ function transcript(records, meta) {
 function main() {
   const a = args(process.argv.slice(2));
   const root = a.repo ? real(a.repo) : real(path.join(__dirname, '..'));
+  if (a['session-id'] === true) {
+    console.error('The --session-id option requires a session ID.');
+    process.exit(1);
+  }
+  const selected = typeof a['session-id'] === 'string' ? a['session-id'].trim() : '';
   const me = a['dry-run'] ? (a.me || 'dry-run') : whoAmI(root, a.me);
   const home = a['codex-home'] || process.env.CODEX_HOME || path.join(os.homedir(), '.codex');
   const sessions = path.join(home, 'sessions');
@@ -130,20 +138,29 @@ function main() {
   const outDir = path.join(root, 'ai-logs', 'codex', me);
   if (!a['dry-run']) fs.mkdirSync(outDir, { recursive: true });
   let copied = 0, updated = 0, secret = 0;
+  const outer = [];
+  let found = false;
   for (const src of [...walk(sessions)].sort()) {
     const raw = fs.readFileSync(src, 'utf8');
     const records = parseLines(raw);
     const meta = sessionMeta(records);
-    if (!meta.cwd || !inside(meta.cwd, root)) continue;
+    const dest = path.join(outDir, path.basename(src));
+    const exists = fs.existsSync(dest);
+    const saved = exists && fs.statSync(dest).size === fs.statSync(src).size;
+    if (selected) { if (meta.id !== selected) continue; found = true; }
+    else if (!meta.cwd || !inside(meta.cwd, root)) {
+      // Started in a folder that CONTAINS this repository and mentions it: skipped, so say so (2026-10-28, a student
+      // opened Codex in her old repo's folder and cloned this one inside it; none of her sessions saved).
+      if (meta.cwd && inside(root, meta.cwd) && raw.includes(path.basename(root)) && !saved) outer.push(meta);
+      continue;
+    }
     const scan = scannable(records);
     if (SECRET_PATTERNS.some(re => re.test(scan))) {
       secret++;
       console.log(`SKIPPED (looks like it contains a password or key; remove it from the session first): ${src}`);
       continue;
     }
-    const dest = path.join(outDir, path.basename(src));
-    const exists = fs.existsSync(dest);
-    if (exists && fs.statSync(dest).size === fs.statSync(src).size) continue;
+    if (saved) continue;
     if (a['dry-run']) { console.log(`would save: ${path.basename(src)} (${meta.originator || ''})`); exists ? updated++ : copied++; continue; }
     fs.copyFileSync(src, dest);
     fs.writeFileSync(dest.replace(/\.jsonl$/, '.md'), transcript(records, meta), 'utf8');
@@ -151,8 +168,16 @@ function main() {
   }
   console.log(`${a['dry-run'] ? '[dry run] ' : ''}Saved to ${path.relative(root, outDir)}: ${copied} new session(s), ${updated} updated.`);
   if (secret) console.log(`${secret} session(s) skipped because they appear to contain a secret.`);
+  if (selected && !found) console.log(`No Codex session with ID ${selected} on this computer.`);
   if (copied || updated) console.log('Commit these files with the work they belong to.');
   else console.log("Nothing new. If you expected sessions, make sure Codex was working in this repository's folder.");
+  if (outer.length) {
+    console.log('');
+    console.log(`WARNING: ${outer.length} Codex session(s) that mention this repository were started in a folder that contains it, not in the repository folder itself. They were not saved:`);
+    for (const m of outer) console.log(`  ${m.id}  (started in ${m.cwd})`);
+    console.log(`Open the repository folder itself (${root}) in Codex and start a new conversation there. Sessions started there save on their own.`);
+    console.log('To save one of the sessions above:  node scripts/save-codex-sessions.js --session-id <ID>');
+  }
 }
 
 main();

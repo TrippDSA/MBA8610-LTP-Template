@@ -42,6 +42,7 @@ The team's Codex conversations are part of the project record. You save them you
 - Before every commit, run `node scripts/save-codex-sessions.js` and include any new or updated files in `ai-logs/codex/` in that commit.
 - When the user says they are done for now, save the session the same way, commit, and push, following the Git rules above.
 - The script copies only this repository's sessions. If it reports a skipped session (one that appears to contain a password or key), tell the user. If it asks for a GitHub username, ask the user for theirs and rerun it with `--me <username>`.
+- If the script warns that sessions were started in a folder that contains the repository, tell the user: those sessions never save on their own, so they should open the repository folder itself in Codex and start a new conversation there. Offer to save each listed session with `--session-id <ID>`, on a branch, following the Git rules above.
 
 ## Before the session ends
 If the session settled one of the four decisions, suggest an entry for `docs/decisions.md`; the team writes it.
